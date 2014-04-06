@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Binding Example</title>
+    <script src="js/lib/angular.min.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+<body ng-app>
+    <div>
+        <span>Text Example</span>
+        <br />
+        <input type="text" ng-model="string" />
+        <span>{{string}}</span>
+    </div>
+    <hr />
+    <div>
+        <span>Checkbox Example</span>
+        <br />
+        <input type="checkbox" ng-model="accepted" />
+        <button ng-disabled="!accepted">Proceed</button>
+    </div>
+</body>
+</html>

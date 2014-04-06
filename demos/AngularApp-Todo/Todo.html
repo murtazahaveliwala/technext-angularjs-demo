@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo Maker - Angular App</title>
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/TodoCtrl.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+<body ng-app>
+<h1>My todo list</h1>
+<div ng-controller="TodoCtrl">
+    <div>{{remaining()}} of {{todoList.length}} Remaining</div>
+    <form>
+        <ul ng-repeat="todo in todoList">
+            <li>
+                <input id="input-{{$index + 1}}" type="checkbox" ng-model="todo.completed" />
+                <label for="input-{{$index + 1}}" ng-class="{completed: todo.completed, hide: editFlags[$index]}">{{todo.text}}</label>
+                <input type="text" ng-model="todo.text" ng-class="{hide: !editFlags[$index]}" ng-focus="!editFlags[$index]" ng-blur="makeEditable($index, false)" />
+                <button class="edit-button" ng-click="makeEditable($index, true)" ng-class="{hide: editFlags[$index]}">Edit</button>
+                <button class="remove-button" ng-click="remove($index)">Remove</button>
+            </li>
+        </ul>
+        <div><input type="text" placeholder="New Task" ng-model="newTodo"
+                /><input type="submit" ng-click="add()" value="Add" /></div>
+    </form>
+    <div ng-class="{hide: !(todoList.length - remaining())}"><button ng-click="clearCompleted()">Clear completed</button></div>
+</div>
+</body>
+</html>

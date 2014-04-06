@@ -1,0 +1,23 @@
+.completed {
+    text-decoration: line-through;
+}
+
+li {
+    list-style: none;
+}
+input[type=checkbox] {
+    margin-right: 5px;
+}
+
+.remove-button,
+.edit-button {
+    margin-left: 10px;
+}
+
+.hide {
+    display: none;
+}
+
+float-right {
+    float: right;
+}
