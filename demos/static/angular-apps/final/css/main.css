@@ -1,3 +1,10 @@
+
+body {
+    font-family: 'verdana', 'helvetica', 'arial';
+    font-size: 18px;
+    color: #555;
+}
+
 .completed {
     text-decoration: line-through;
 }

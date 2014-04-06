@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Directives and Data-Binding Example - AngularJS Demo</title>
+    <script src="../js/lib/angular.min.js"></script>
+    <link rel="stylesheet" href="../css/main.css" />
+    <style>
+        .normal-border {
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+        .dashed-border {
+            border-style: dashed;
+        }
+        .yellow-border {
+            border-color: yellow;
+        }
+        .red-border {
+            border-color: red;
+        }
+        .no-top-border {
+            border-top-width: 0;
+        }
+        .no-right-border {
+            border-right-width: 0;
+        }
+        .no-bottom-border {
+            border-bottom-width: 0;
+        }
+        .no-left-border {
+            border-left-width: 0;
+        }
+        .title {
+            text-decoration: underline;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body ng-app>
+    <h1>
+        Directives and Data-Bindings -
+    </h1>
+    <h3>
+        ng-app, ng-model, ng-disabled, ng-class and ng-hide
+    </h3>
+    <div>
+        <span class="title">Textboxes example</span>
+        <br />
+        <br />
+        <input type="text" ng-model="string" />
+        <input type="text" ng-model="string" />
+    </div>
+    <br />
+    <br />
+
+    <div>
+        <span class="title">Accept and Install example</span>
+        <br />
+        <br />
+        <input type="checkbox" ng-model="hide">Hide</input>
+        <span class="normal-border" ng-hide="hide">
+            &nbsp;Look, I am visible!
+        </span>
+        <br />
+        <input type="checkbox" ng-model="accepted">I Accept</input>
+        <button ng-disabled="!accepted">Install</button>
+    </div>
+    <br />
+    <br />
+
+    <div>
+        <span class="title">Classes example</span>
+        <br />
+        <br />
+        <div class="normal-border"
+             ng-class="{'dashed-border': dashed,
+                        'yellow-border': yellow,
+                        'red-border': red,
+                        'no-top-border': noTop,
+                        'no-bottom-border': noBottom,
+                        'no-left-border': noLeft,
+                        'no-right-border': noRight}">
+            Check out my borders!</div>
+        <input type="checkbox" ng-model="dashed">Dashed</input>
+        <br />
+        <input type="checkbox" ng-model="yellow">Yellow</input>
+        <input type="checkbox" ng-model="red">Red</input>
+        <br />
+        <input type="checkbox" ng-model="noTop">No top</input>
+        <input type="checkbox" ng-model="noBottom">No bottom</input>
+        <input type="checkbox" ng-model="noLeft">No left</input>
+        <input type="checkbox" ng-model="noRight">No right</input>
+    </div>
+    <hr />
+
+    <h3>
+        <input type="checkbox" ng-model="showExpressions" />
+        Bindings and Expressions
+    </h3>
+    <div ng-show="showExpressions">
+        <div>
+            <span class="title">Simple</span>
+            <br />
+            <input type="text" ng-model="simpleString" />
+            <span>{{simpleString}}</span>
+        </div>
+
+        <br />
+        <div>
+            <span class="title">Table of Seven</span>
+            <br />
+            <input type="number" ng-model="myNumber" /> X 7 = {{myNumber * 7}}
+        </div>
+        <hr />
+    </div>
+
+    <h3>
+        <input type="checkbox" ng-model="showFilters" />
+        Bindings and Filters
+    </h3>
+    <div ng-show="showFilters">
+        <div>
+            <span class="title">Upper Case filter</span>
+            <br />
+            <input type="text" ng-model="name" />
+            <span>{{name | uppercase}}</span>
+        </div>
+
+        <br />
+        <div>
+            <span class="title">Currency filter</span>
+            <br />
+            <input type="text" ng-model="rupees" /> Rupees =
+            {{rupees / 60 | currency}}
+        </div>
+    </div>
+
+</body>
+</html>
