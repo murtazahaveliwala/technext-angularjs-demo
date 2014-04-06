@@ -1,5 +1,5 @@
 
 function MyCtrl($scope) {
-  $scope.myString = '';
+  $scope.myString = 'lorem ipsum';
 }
 
