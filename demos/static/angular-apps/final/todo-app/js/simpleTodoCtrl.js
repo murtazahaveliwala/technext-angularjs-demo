@@ -1,10 +1,9 @@
-function TodoCtrl($scope) {
-  var todoList = [];
+function SimpleTodoCtrl($scope) {
   $scope.editFlags = [];
-  $scope.todoList = todoList;
+  $scope.todoList = [];
   $scope.remaining = function() {
     var remainingCount = 0;
-    todoList.forEach(function(todo, index) {
+    $scope.todoList.forEach(function(todo, index) {
       if (!todo.completed) {
         remainingCount++;
       }
@@ -26,7 +25,7 @@ function TodoCtrl($scope) {
   };
 
   $scope.clearCompleted = function() {
-    todoList.forEach(function(todo, index, list) {
+    $scope.todoList.forEach(function(todo, index, list) {
       if (todo.completed) {
         list.splice(index, 1);
       }
