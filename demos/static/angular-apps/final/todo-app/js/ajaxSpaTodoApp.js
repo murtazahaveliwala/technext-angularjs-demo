@@ -2,11 +2,11 @@ var loginApp = angular.module('toDoApp', ['ngResource', 'ngRoute']);
 
 loginApp.config(function($routeProvider) {
   $routeProvider.when('/login', {
-     controller: 'LoginController',
-     templateUrl: 'partials/Login.html'
+     templateUrl: 'partials/Login.html',
+    controller: 'LoginController'
   }).when('/welcome', {
-     controller: 'ToDoController',
-     templateUrl: 'partials/ToDo.html'
+     templateUrl: 'partials/Todo.html',
+     controller: 'ToDoController'
   }).otherwise({
       redirectTo: '/login'
   });
@@ -18,10 +18,10 @@ loginApp.factory('userInfo', function() {
   var _username, _password;
 
   function _isLoginSuccessful(username, password) {
-    return username === 'Murtaza' && password === 'password12#';
+    return username === 'Murtaza' && password === 'somepassword';
   }
 
-  var _api = {
+  return {
     getUserCredentials: function() {
       return {
         username: _username,
@@ -40,37 +40,12 @@ loginApp.factory('userInfo', function() {
 
     login: function(username, password) {
       var loginValid = _isLoginSuccessful(username, password);
-      _api.setUserCredentials(username, password);
+      this.setUserCredentials(username, password);
 
       return loginValid;
     }
   };
 
-  return _api;
-});
-
-loginApp.controller('LoginController', function($scope, $location, userInfo) {
-  if (userInfo.isLoggedIn()) {
-    $location.path('/welcome');
-  }
-
-  $scope.logInSuccess = false;
-  $scope.login = function() {
-    $scope.logInSuccess = userInfo.login($scope.username, $scope.password);
-    if ($scope.logInSuccess) {
-      userInfo.setUserCredentials($scope.username, $scope.password);
-      $location.path('/welcome');
-    }
-  };
-
-  $scope.reset = function() {
-    $scope.username = '';
-    $scope.password = '';
-  };
-
-  $scope.$watch('username + password', function() {
-    $scope.logInSuccess = false;
-  });
 });
 
 loginApp.controller('ToDoController', function($scope, userInfo, $location) {
@@ -85,15 +60,14 @@ loginApp.controller('ToDoController', function($scope, userInfo, $location) {
   $scope.logout = function() {
     userInfo.setUserCredentials();
     $location.path('/login');
-  }
+  };
 
-
-  var todoList = [];
   $scope.editFlags = [];
-  $scope.todoList = todoList;
+  $scope.todoList = [];
+
   $scope.remaining = function() {
     var remainingCount = 0;
-    todoList.forEach(function(todo, index) {
+    $scope.todoList.forEach(function(todo, index) {
       if (!todo.completed) {
         remainingCount++;
       }
@@ -101,6 +75,7 @@ loginApp.controller('ToDoController', function($scope, userInfo, $location) {
 
     return remainingCount;
   };
+
   $scope.add = function() {
     $scope.todoList.push({
       completed: false,
@@ -115,15 +90,45 @@ loginApp.controller('ToDoController', function($scope, userInfo, $location) {
   };
 
   $scope.clearCompleted = function() {
-    todoList.forEach(function(todo, index, list) {
-      if (todo.completed) {
-        list.splice(index, 1);
+    var incompleteTodoList = [];
+    $scope.todoList.forEach(function(todo, index, list) {
+      if (!todo.completed) {
+        incompleteTodoList.push(todo);
       }
     });
-    //$scope.$apply();
+
+    $scope.todoList = incompleteTodoList;
   };
 
   $scope.makeEditable = function(index, status) {
     $scope.editFlags[index] = status;
   };
+});
+
+loginApp.controller('LoginController', function($scope, $location, userInfo) {
+  var _validate = function(username, password) {
+    return userInfo.login(username, password);
+  };
+
+  // Handle if already logged-in
+  if (userInfo.isLoggedIn()) {
+    $location.path('/welcome');
+  }
+
+  $scope.login = function() {
+    if (_validate($scope.username, $scope.password)) {
+      $location.path('/welcome');
+    } else {
+      $scope.username = '';
+      $scope.password = '';
+      $scope.message = "Incorrect username or password!";
+    }
+  };
+
+  $scope.reset = function() {
+    $scope.username = '';
+    $scope.password = '';
+    $scope.message = "";
+  };
+
 });

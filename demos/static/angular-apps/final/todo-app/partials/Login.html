@@ -1,4 +1,8 @@
 <form>
+    <div class="messageBox" ng-show="message">
+        {{ message }}
+    </div>
+
     <div>
         <label for="usernameInput">Username:</label>
         <input id="usernameInput" type="text" ng-model="username" />
@@ -10,3 +14,11 @@
     <input type="submit" value="Login" ng-click="login()"/>
     <input type="button" value="Reset" ng-click="reset()" />
 </form>
+<style>
+    .messageBox {
+        border: 1px solid red;
+        margin-bottom: 15px;
+        padding: 7px;
+        width: 350px;
+    }
+</style>

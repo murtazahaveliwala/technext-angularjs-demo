@@ -14,7 +14,13 @@ Welcome {{username}}!
             <button class="remove-button" ng-click="remove($index)">Remove</button>
         </li>
     </ul>
-    <div><input type="text" placeholder="New Task" ng-model="newTodo"
-            /><input type="submit" ng-click="add()" value="Add" /></div>
+
+    <div>
+        <input type="text" placeholder="New Task" ng-model="newTodo" />
+        <input type="submit" ng-click="add()" value="Add" />
+    </div>
 </form>
-<div ng-class="{hide: !(todoList.length - remaining())}"><button ng-click="clearCompleted()">Clear completed</button></div>
+
+<div ng-class="{hide: !(todoList.length - remaining())}">
+    <button ng-click="clearCompleted()">Clear completed</button>
+</div>

@@ -25,12 +25,14 @@ function SimpleTodoCtrl($scope) {
   };
 
   $scope.clearCompleted = function() {
+    var incompleteTodoList = [];
     $scope.todoList.forEach(function(todo, index, list) {
-      if (todo.completed) {
-        list.splice(index, 1);
+      if (!todo.completed) {
+        incompleteTodoList.push(todo);
       }
     });
-    //$scope.$apply();
+
+    $scope.todoList = incompleteTodoList;
   };
 
   $scope.makeEditable = function(index, status) {
