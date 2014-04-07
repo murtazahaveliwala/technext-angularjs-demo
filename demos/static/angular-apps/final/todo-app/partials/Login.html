@@ -11,14 +11,20 @@
         <label for="passwordInput">Password:</label>
         <input id="passwordInput" type="password" ng-model="password" />
     </div>
-    <input type="submit" value="Login" ng-click="login()"/>
-    <input type="button" value="Reset" ng-click="reset()" />
+    <input type="submit"
+           value="Login"
+           ng-click="login()"
+           ng-disabled="buttonsDisabled" />
+    <input type="button"
+           value="Reset"
+           ng-click="reset()"
+           ng-disabled="buttonsDisabled" />
 </form>
 <style>
     .messageBox {
         border: 1px solid red;
         margin-bottom: 15px;
         padding: 7px;
-        width: 350px;
+        width: 400px;
     }
 </style>

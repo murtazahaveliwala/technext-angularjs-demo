@@ -14,24 +14,22 @@ loginApp.config(function($routeProvider) {
   //$locationProvider.html5mode(true);
 });
 
-loginApp.factory('userInfo', function() {
-  var _username, _password;
-
-  function _isLoginSuccessful(username, password) {
-    return username === 'Murtaza' && password === 'somepassword';
-  }
+loginApp.factory('loginService', function($http, $q) {
+  var _username, _password, _nickname;
 
   return {
     getUserCredentials: function() {
       return {
         username: _username,
-        password: _password
+        password: _password,
+        nickname: _nickname
       }
     },
 
-    setUserCredentials: function(username, password) {
+    setUserCredentials: function(username, password, nickname) {
       _username = username;
       _password = password;
+      _nickname = nickname;
     },
 
     isLoggedIn: function() {
@@ -39,26 +37,65 @@ loginApp.factory('userInfo', function() {
     },
 
     login: function(username, password) {
-      var loginValid = _isLoginSuccessful(username, password);
-      this.setUserCredentials(username, password);
+      var currentUserCredentials = this.getUserCredentials(),
+          loginPromise = $q.defer();
 
-      return loginValid;
+      if(!username || !password) {
+        loginPromise.reject({
+          'message': "Please provide a username and a password!",
+          'status': status
+        });
+      } else if (currentUserCredentials.username === username &&
+          currentUserCredentials.password === password) {
+        loginPromise.resolve(currentUserCredentials);
+      } else {
+        var validatePromise = $http.get('/validate', {
+          params:{
+            'username': username,
+            'password': password
+          }
+        }),
+            self = this;
+
+        // set credentials when request is successful
+        validatePromise.success(function(data, status) {
+          if (!data.error && (status === 200 || status === 209)) {
+            self.setUserCredentials(username, password, data.nickname);
+            loginPromise.resolve(self.getUserCredentials());
+          } else {
+            loginPromise.reject({
+              'error': data.error,
+              'message': data.message,
+              'status': status
+            });
+          };
+        }).
+        error(function(data, status, headers, config) {
+            loginPromise.reject({
+              'error': data ? data.error : null,
+              'message': data? data.message : null,
+              'status': status
+            });
+        });
+      }
+
+      // return a promise
+      return loginPromise;
     }
   };
 
 });
 
-loginApp.controller('ToDoController', function($scope, userInfo, $location) {
-  if (!userInfo.isLoggedIn()) {
+loginApp.controller('ToDoController', function($scope, loginService, $location) {
+  if (!loginService.isLoggedIn()) {
     $location.path('/login');
   }
 
-  var userCredentials = userInfo.getUserCredentials();
-  $scope.username = userCredentials.username;
-  $scope.password = userCredentials.password;
+  var userCredentials = loginService.getUserCredentials();
+  $scope.nickname = userCredentials.nickname;
 
   $scope.logout = function() {
-    userInfo.setUserCredentials();
+    loginService.setUserCredentials();
     $location.path('/login');
   };
 
@@ -100,24 +137,35 @@ loginApp.controller('ToDoController', function($scope, userInfo, $location) {
   };
 });
 
-loginApp.controller('LoginController', function($scope, $location, userInfo) {
-  var _validate = function(username, password) {
-    return userInfo.login(username, password);
-  };
+loginApp.controller('LoginController', function($scope, $location, loginService) {
 
   // Handle if already logged-in
-  if (userInfo.isLoggedIn()) {
+  if (loginService.isLoggedIn()) {
     $location.path('/welcome');
   }
 
   $scope.login = function() {
-    if (_validate($scope.username, $scope.password)) {
-      $location.path('/welcome');
-    } else {
+    $scope.buttonsDisabled = true;
+
+    function _doOnFailedLogin(message) {
       $scope.username = '';
       $scope.password = '';
-      $scope.message = "Incorrect username or password!";
+      $scope.message = message || "Login failed! Please try again later.";
+      $scope.buttonsDisabled = false;
     }
+    function _doOnSuccessfulLogin() {
+      $scope.buttonsDisabled = false;
+      $location.path('/welcome');
+    }
+
+    var loginPromise = loginService.
+        login($scope.username, $scope.password).promise;
+
+    loginPromise.then(function(loginResolutionData) {
+      _doOnSuccessfulLogin();
+    }, function(loginResolutionData) {
+      _doOnFailedLogin(loginResolutionData.message);
+    });
   };
 
   $scope.reset = function() {
