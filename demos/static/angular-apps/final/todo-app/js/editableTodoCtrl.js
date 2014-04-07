@@ -1,10 +1,11 @@
-function SimpleTodoCtrl($scope) {
+function EditableTodoCtrl($scope) {
   $scope.todoList = [];
 
   $scope.add = function() {
     $scope.todoList.push({
       completed: false,
-      'text': $scope.newTodo
+      'text': $scope.newTodo,
+      beingEdited: false
     });
     $scope.newTodo = '';
   };
@@ -33,5 +34,9 @@ function SimpleTodoCtrl($scope) {
     });
 
     $scope.todoList = incompleteTodoList;
+  };
+
+  $scope.makeEditable = function(todo, editable) {
+    todo.beingEdited = editable;
   };
 }

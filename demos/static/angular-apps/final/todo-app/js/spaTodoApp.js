@@ -20,8 +20,19 @@ loginApp.controller('ToDoController', function($scope, $location) {
     $location.path('/login');
   };
 
-  $scope.editFlags = [];
   $scope.todoList = [];
+
+  $scope.add = function() {
+    $scope.todoList.push({
+      completed: false,
+      'text': $scope.newTodo
+    });
+    $scope.newTodo = '';
+  };
+
+  $scope.remove = function(index) {
+    $scope.todoList.splice(index, 1);
+  };
 
   $scope.remaining = function() {
     var remainingCount = 0;
@@ -34,19 +45,6 @@ loginApp.controller('ToDoController', function($scope, $location) {
     return remainingCount;
   };
 
-  $scope.add = function() {
-    $scope.todoList.push({
-      completed: false,
-      'text': $scope.newTodo
-    });
-    $scope.newTodo = '';
-    $scope.editFlags.push(false);
-  }
-
-  $scope.remove = function(index) {
-    $scope.todoList.splice(index, 1);
-  };
-
   $scope.clearCompleted = function() {
     var incompleteTodoList = [];
     $scope.todoList.forEach(function(todo, index, list) {
@@ -56,10 +54,6 @@ loginApp.controller('ToDoController', function($scope, $location) {
     });
 
     $scope.todoList = incompleteTodoList;
-  };
-
-  $scope.makeEditable = function(index, status) {
-    $scope.editFlags[index] = status;
   };
 });
 

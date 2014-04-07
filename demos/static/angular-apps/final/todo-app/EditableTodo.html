@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Simple Todo App - AngularJs Demo</title>
+    <title>Editable Todo App - AngularJs Demo</title>
     <link rel="stylesheet" href="../css/main.css" />
     <script src="../js/lib/angular.js"></script>
-    <script src="js/simpleTodoCtrl.js"></script>
+    <script src="js/editableTodoCtrl.js"></script>
 </head>
 <body ng-app>
-<h1>My Todo list</h1>
+<h1>My (editable)Todo list</h1>
 
-<div ng-controller="SimpleTodoCtrl">
+<div ng-controller="EditableTodoCtrl">
     <div>{{remaining()}} of {{todoList.length}} Remaining</div>
     <form>
         <ul ng-repeat="todo in todoList">
@@ -18,9 +18,18 @@
                        type="checkbox"
                        ng-model="todo.completed" />
                 <label for="input-{{$index + 1}}"
-                       ng-class="{completed: todo.completed}">
+                       ng-class="{completed: todo.completed, hide: todo.beingEdited}">
                     {{todo.text}}
                 </label>
+                <input type="text" ng-model="todo.text"
+                       ng-class="{hide: !todo.beingEdited}"
+                       ng-focus="!todo.beingEdited"
+                       ng-blur="makeEditable(todo, false)" />
+                <button class="edit-button"
+                        ng-click="makeEditable(todo, true)"
+                        ng-class="{hide: todo.beingEdited}">
+                    Edit
+                </button>
                 <button class="remove-button" ng-click="remove($index)">
                     Remove
                 </button>
