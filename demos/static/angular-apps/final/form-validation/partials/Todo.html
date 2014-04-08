@@ -1,0 +1,32 @@
+Welcome {{nickname}}!
+<span class="float-right"><a href="#" ng-click="logout()">Logout</a></span>
+<br />
+<br />
+<br />
+<div>{{remaining()}} of {{todoList.length}} Remaining</div>
+<form>
+    <ul ng-repeat="todo in todoList">
+        <li>
+            <input id="input-{{$index + 1}}"
+                   type="checkbox"
+                   ng-model="todo.completed" />
+            <label for="input-{{$index + 1}}"
+                   ng-class="{completed: todo.completed}">
+                {{todo.text}}
+            </label>
+            <button class="remove-button"
+                    ng-click="remove(todo)">
+                Remove
+            </button>
+        </li>
+    </ul>
+
+    <div>
+        <input type="text" placeholder="New Task" ng-model="newTodo" />
+        <input type="submit" ng-click="add()" value="Add" />
+    </div>
+</form>
+
+<div ng-class="{hide: !(todoList.length - remaining())}">
+    <button ng-click="clearCompleted()">Clear completed</button>
+</div>

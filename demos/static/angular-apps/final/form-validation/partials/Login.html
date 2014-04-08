@@ -1,0 +1,80 @@
+
+<form name="loginForm" novalidate>
+    <div class="messageBox" ng-show="message">
+        {{ message }}
+    </div>
+    <div class="messageBox"
+         ng-show="loginForm.$dirty && loginForm.$invalid">
+        There are errors in the form.
+    </div>
+
+    <!-- Input Fields -->
+    <div>
+        <label for="usernameInput">Username<span class="red">*</span>:</label>
+        <input id="usernameInput"
+               type="text"
+               name="usernameField"
+               ng-model="username"
+
+               required
+               ng-minlength="6" />
+        <p ng-show="loginForm.usernameField.$dirty && loginForm.usernameField.$error.required">
+            Username is mandatory!
+        </p>
+        <p ng-show="loginForm.usernameField.$dirty && loginForm.usernameField.$error.minlength">
+            Username should be atleast of 6 characters!
+        </p>
+    </div>
+    <div>
+        <label for="passwordInput">Password:<span class="red">*</span></label>
+        <input id="passwordInput"
+               type="text"
+               name="passwordField"
+               ng-model="password"
+
+               required
+               ng-minlength="8"
+               ng-pattern="/[!@#$%^&*()_+-=<>]+/" />
+        <p ng-show="loginForm.passwordField.$dirty && loginForm.passwordField.$error.required">
+            Password is mandatory!
+        </p>
+        <p ng-show="loginForm.passwordField.$dirty && loginForm.passwordField.$error.minlength">
+            Password should be atleast of 8 characters!
+        </p>
+        <p ng-show="loginForm.passwordField.$dirty && loginForm.passwordField.$error.pattern">
+            Password should contain atleast one special character!
+        </p>
+    </div>
+
+    <!-- Buttons -->
+    <div>
+        <input type="submit"
+               value="Login"
+               ng-click="login()" />
+    </div>
+    <div>
+        <input type="button"
+               value="Reset"
+               ng-click="reset()" />
+    </div>
+
+</form>
+
+<style>
+    .messageBox {
+        border: 1px solid red;
+        margin-bottom: 15px;
+        padding: 7px;
+        width: 400px;
+    }
+    .red {
+        color: red;
+    }
+    form p {
+        font-size: 12px;
+        border: 1px solid red;
+        margin: 5px 10px 10px;
+        padding: 7px;
+        width: 450px;
+    }
+</style>
