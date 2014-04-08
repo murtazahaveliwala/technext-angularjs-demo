@@ -1,4 +1,4 @@
-var app = angular.module('simpleTodoDirectiveDemo', []);
+var app = angular.module('nestedTodoDirectiveDemo', []);
 
 app.controller('SimpleTodoCtrl', ['$scope', function($scope) {
   $scope.todoList = [];
@@ -41,7 +41,18 @@ app.controller('SimpleTodoCtrl', ['$scope', function($scope) {
 app.directive('todos', function() {
   return {
     restrict: 'E',
-    templateUrl: 'partials/todos.html',
+    templateUrl: 'partials/nestedTodos.html',
     replace: true
+  };
+});
+
+app.directive('todoText', function() {
+  return {
+    restrict: 'EA',
+    template: '<span>{{ string }}</span>',
+    replace: true,
+    scope: {
+      'string': '@text'
+    }
   };
 });
