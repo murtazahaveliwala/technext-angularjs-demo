@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tabs Directive - AngularJs Demo</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <script src="../js/lib/angular.js"></script>
+    <script src="js/tabsDirectiveDemo.js"></script>
+
+    <style>
+        .tabsContainer {
+            border: 1px solid green;
+            margin-top: 10px;
+            width: 600px;
+            height: 400px
+        }
+        .tab {
+            border: 1px solid red;
+            width: 75px;
+            padding: 10px;
+        }
+        .active {
+            color: red;
+            border-color: green;
+            background-color: yellow;
+        }
+        .inactive {
+            color: green;
+        }
+        div.active {
+            color: black;
+            border-color: green;
+        }
+    </style>
+</head>
+<body ng-app="tabsDirectiveDemo">
+
+    <tabs>
+        <tab title="First Tab">
+            <div>I am first tab's body</div>
+        </tab>
+        <tab title="Second Tab">
+            <div>Hi, I am second tab</div>
+        </tab>
+        <tab title="Third Tab">
+            <a href="#">Third tab</a>
+        </tab>
+    </tabs>
+
+</body>
+</html>

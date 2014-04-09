@@ -1,0 +1,12 @@
+<div>
+    <div>
+        <span ng-repeat="tab in tabsList"
+              class="tab"
+              ng-class="{'active': tab.selected, 'inactive': !tab.selected}">
+            <a ng-click="showMe(tab)">
+                {{tab.title}}
+            </a>
+        </span>
+    </div>
+    <div ng-transclude class="tabsContainer"></div>
+</div>
