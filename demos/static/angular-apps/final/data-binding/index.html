@@ -15,8 +15,8 @@
         .yellow-border {
             border-color: yellow;
         }
-        .red-border {
-            border-color: red;
+        .white-border {
+            border-color: white;
         }
         .no-top-border {
             border-top-width: 0;
@@ -34,6 +34,20 @@
             text-decoration: underline;
             font-style: italic;
         }
+        .red-background,
+        .yellow-background {
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid black;
+            opacity: 0.75;
+        }
+        .red-background {
+            background-color: red;
+            color: white;
+        }
+        .yellow-background {
+            background-color: yellow;
+        }
     </style>
 </head>
 <body ng-app>
@@ -43,18 +57,23 @@
     <h3>
         ng-app, ng-model, ng-disabled, ng-class and ng-hide
     </h3>
-    <div>
+
+    <!--  Textboxes example  -->
+    <div class="red-background">
         <span class="title">Textboxes example</span>
         <br />
         <br />
-        <input type="text" ng-model="string" />
-        <input type="text" ng-model="string" />
+        <input type="text" ng-model="myString" />
+        <input type="text" ng-model="myString" />
+        {{ myString }}
     </div>
+
     <br />
     <br />
 
-    <div>
-        <span class="title">Accept and Install example</span>
+    <!--  Checkboxes, show/hide, &amp; buttons example  -->
+    <div class="yellow-background">
+        <span class="title">Checkboxes, show/hide, &amp; buttons example</span>
         <br />
         <br />
         <input type="checkbox" ng-model="hide">Hide</input>
@@ -65,17 +84,20 @@
         <input type="checkbox" ng-model="accepted">I Accept</input>
         <button ng-disabled="!accepted">Install</button>
     </div>
+    <!-- ------------------------ Example End ------------------------------ -->
+
     <br />
     <br />
 
-    <div>
+    <!--  Classes example  -->
+    <div class="red-background">
         <span class="title">Classes example</span>
         <br />
         <br />
         <div class="normal-border"
              ng-class="{'dashed-border': dashed,
                         'yellow-border': yellow,
-                        'red-border': red,
+                        'white-border': white,
                         'no-top-border': noTop,
                         'no-bottom-border': noBottom,
                         'no-left-border': noLeft,
@@ -84,13 +106,15 @@
         <input type="checkbox" ng-model="dashed">Dashed</input>
         <br />
         <input type="checkbox" ng-model="yellow">Yellow</input>
-        <input type="checkbox" ng-model="red">Red</input>
+        <input type="checkbox" ng-model="white">White</input>
         <br />
         <input type="checkbox" ng-model="noTop">No top</input>
         <input type="checkbox" ng-model="noBottom">No bottom</input>
         <input type="checkbox" ng-model="noLeft">No left</input>
         <input type="checkbox" ng-model="noRight">No right</input>
     </div>
+    <!-- ------------------------- Example End ----------------------------- -->
+
     <hr />
 
     <h3>
@@ -98,19 +122,26 @@
         Bindings and Expressions
     </h3>
     <div ng-show="showExpressions">
-        <div>
-            <span class="title">Simple</span>
+
+        <!-- Simple binding -->
+        <div class="red-background">
+            <span class="title">Simple binding</span>
             <br />
             <input type="text" ng-model="simpleString" />
             <span>{{simpleString}}</span>
         </div>
+        <!-- --------------------- Example End ---------------------------- -->
 
         <br />
-        <div>
-            <span class="title">Table of Seven</span>
+
+        <!-- Table of Two -->
+        <div class="yellow-background">
+            <span class="title">Table of Two</span>
             <br />
-            <input type="number" ng-model="myNumber" /> X 7 = {{myNumber * 7}}
+            <input type="number" ng-model="myNumber" /> X 2 = {{myNumber * 2}}
         </div>
+        <!-- --------------------- Example End ---------------------------- -->
+
         <hr />
     </div>
 
@@ -119,20 +150,26 @@
         Bindings and Filters
     </h3>
     <div ng-show="showFilters">
-        <div>
+
+        <!-- Upper Case filter -->
+        <div class="red-background">
             <span class="title">Upper Case filter</span>
             <br />
             <input type="text" ng-model="name" />
             <span>{{name | uppercase}}</span>
         </div>
+        <!-- --------------------- Example End ---------------------------- -->
 
         <br />
-        <div>
+
+        <!-- Currency filter -->
+        <div class="yellow-background">
             <span class="title">Currency filter</span>
             <br />
-            <input type="text" ng-model="rupees" /> Rupees =
+            INR<input type="text" ng-model="rupees" /> =
             {{rupees / 60 | currency}}
         </div>
+        <!-- --------------------- Example End ---------------------------- -->
     </div>
 
 </body>
