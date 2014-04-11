@@ -3,8 +3,24 @@
 <head>
     <title>Tabs Directive - AngularJs Demo</title>
     <link rel="stylesheet" href="../css/main.css" />
+
     <script src="../js/lib/angular.js"></script>
     <script src="js/tabsDirectiveDemo.js"></script>
+</head>
+<body ng-app="tabsDirectiveDemo">
+
+    <tabs>
+        <tab title="First Tab">
+            <div>I am first tab's body</div>
+        </tab>
+        <tab title="Second Tab">
+            <div>Hi, I am second tab</div>
+        </tab>
+        <tab title="Third Tab">
+            <a href="#">Third tab</a>
+        </tab>
+    </tabs>
+
 
     <style>
         .tabsContainer {
@@ -25,6 +41,7 @@
             width: 75px;
             padding: 10px;
             border-radius: 15px 15px 0 0;
+            background-color: white;
         }
         .active {
             color: red;
@@ -39,20 +56,6 @@
             border-color: green;
         }
     </style>
-</head>
-<body ng-app="tabsDirectiveDemo">
-
-    <tabs>
-        <tab title="First Tab">
-            <div>I am first tab's body</div>
-        </tab>
-        <tab title="Second Tab">
-            <div>Hi, I am second tab</div>
-        </tab>
-        <tab title="Third Tab">
-            <a href="#">Third tab</a>
-        </tab>
-    </tabs>
 
 </body>
 </html>
