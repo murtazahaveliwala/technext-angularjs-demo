@@ -12,8 +12,8 @@
 <div ng-controller="EditableTodoCtrl">
     <div>{{remaining()}} of {{todoList.length}} Remaining</div>
     <form>
-        <ul ng-repeat="todo in todoList">
-            <li>
+        <ul>
+            <li ng-repeat="todo in todoList">
                 <input id="input-{{$index + 1}}"
                        type="checkbox"
                        ng-model="todo.completed" />
